@@ -12,7 +12,8 @@ end
 
 function entry(state, program)
 
-% Determine the delay before the reward here
+% Update data and give juice here
+% Chosen target stimuli also needs to be displayed
 
 state.UserData.acquired = false;
 state.UserData.entered = false;
@@ -34,9 +35,6 @@ end
 function exit(state, program)
 
 % Deliver reward here
-% Ensure that the state exist right after reward delivery, and does not
-% wait till the 'Duration' of the state is met
-
 quantity = program.Value.rewards.prob_reward;
 sclt.util.deliver_reward( program, 1, quantity );
 

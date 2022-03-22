@@ -27,6 +27,12 @@ reset( targets.central_fixation );
 draw( stimuli.central_fixation, window );
 flip( window );
 
+if program.Value.config.DEBUG_SCREEN.is_present
+    debug_window = program.Value.debug_window;
+    draw( stimuli.central_fixation, debug_window );
+    flip( debug_window );
+end
+
 end
 
 function loop(state, program)
@@ -53,6 +59,7 @@ end
 function exit(state, program)
 
 states = program.Value.states;
+state_names = keys( states );
 
 if ( state.UserData.acquired )
     next( state, states('decision') );
@@ -70,12 +77,10 @@ structure = program.Value.structure;
 fix_radius = structure.fix_position_radius;
 span = fix_radius - 0;
 
-abs_half_offset = rand( 1, 2 );
-signed_offset = 1 - 2*(signed_offset);  % Unif random number from -1 to 1
+offset_seed = rand( 1, 2 );
+signed_offset = [1, 1] - 2 * offset_seed;  % Unif random number from -1 to 1
+normalized_offset = signed_offset * span;
 
-offset = 
-offset = rand_rel_position*fix_radius;
-
-position = position + offset;
+position = position + normalized_offset;
 
 end

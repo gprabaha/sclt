@@ -62,8 +62,17 @@ end
 function exit(state, program)
 
 states = program.Value.states;
-next( state, states('var_delay') );
+state_names = keys( states );
 
-% pct.util.deliver_reward( program, 1, quantity );
+if ( state.UserData.acquired )
+    if any( strcmp(state_names,'var_delay') )
+        next( state, states('var_delay') );
+    else
+        next( state, states('task_iti') );
+    end
+else
+    next( state, states('error_iti') );
+end
+
 
 end

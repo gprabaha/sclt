@@ -1,6 +1,5 @@
 %% Social cue learning training initiation script for mac
 
-
 conf = sclt.config.reconcile( sclt.config.load() );
 
 % Task structure

@@ -59,9 +59,14 @@ end
 function exit(state, program)
 
 states = program.Value.states;
+state_names = keys( states );
 
 if ( state.UserData.acquired )
-    next( state, states('decision') );
+    if any( strcmp(state_names,'decision') )
+        next( state, states('decision') );
+    else
+        next( state, states('task_iti') );
+    end
 else
     next( state, states('error_iti') );
 end
