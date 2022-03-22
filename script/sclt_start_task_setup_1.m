@@ -2,6 +2,7 @@
 
 KbName('UnifyKeyNames');
 
-conf = sclt_define_config_setup1;
+conf = sclt.util.get_config_with_current_task_params;
+conf = sclt_update_config_for_setup1( conf );
 
 sclt.task.start( conf );

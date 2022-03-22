@@ -1,47 +1,8 @@
-function conf = sclt_define_config_setup1(do_save)
+function conf = sclt_update_config_for_setup1(conf)
 
-if ( nargin < 1 )
+if ( nargin < 2 )
   do_save = true;
 end
-
-%%%%%%%%%%%%%%%
-% Load config %
-%%%%%%%%%%%%%%%
-conf = sclt.config.reconcile( sclt.config.load() );
-conf = sclt.config.prune( conf );
-
-%%%%%%%%%%%%%%%%%%
-% Task structure %
-%%%%%%%%%%%%%%%%%%
-% States
-conf.STRUCTURE.state_names = { 'new_trial', 'initial_fixation',...
-    'decision', 'choice', 'var_delay', 'prob_reward',...
-    'task_iti', 'error_iti'...
-    };
-% Time in states
-conf.TIMINGS.time_in.new_trial = 0;
-conf.TIMINGS.time_in.initial_fixation = 5;
-conf.TIMINGS.time_in.decision = 1;
-conf.TIMINGS.time_in.choice = 3;
-conf.TIMINGS.time_in.var_delay = 1;
-conf.TIMINGS.time_in.prob_reward = 1;
-conf.TIMINGS.time_in.task_iti = 1;
-conf.TIMINGS.time_in.error_iti = 3;
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Stimulus display parameters %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Trial progress display %
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-%%%%%%%%%%%%%%
-% Generators %
-%%%%%%%%%%%%%%
-
 
 %%%%%%%%%%%%%%%%%%
 % Reward details %
@@ -61,7 +22,7 @@ conf.REWARDS.key_press = 0.1;
 
 conf.INTERFACE.gaze_source_type = 'digital_eyelink';  % 'mouse', 'digital_eyelink', 'analog_input'
 conf.INTERFACE.reward_output_type = 'arduino'; % 'arduino', 'ni', 'none'
-conf.INTERFACE.save_data = false;
+conf.INTERFACE.save_data = true;
 conf.INTERFACE.stop_key = KbName( 'escape' );
 
 %%%%%%%%%%%%%%%%%%
