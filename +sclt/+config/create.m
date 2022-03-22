@@ -39,7 +39,10 @@ STRUCTURE.state_names = {...
     'error_iti' ...
 };
 STRUCTURE.fix_position_radius = 0.25; % Fixation square will appear within this radius
-STRUCTURE.num_targets = 1;
+STRUCTURE.fixation_time = 0.3;
+STRUCTURE.fixation_hold_time = 0.5;
+STRUCTURE.target_collection_time = 0.25;
+STRUCTURE.num_targets = 2;
 STRUCTURE.num_trials_per_block = 50;
 STRUCTURE.target_position_radius  = 0.5; % Targets appear with inner radius of fix radius and outer radius as this
 STRUCTURE.target_types = {'self', 'other', 'neither'};

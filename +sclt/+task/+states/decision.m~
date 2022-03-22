@@ -17,20 +17,19 @@ state.UserData.entered = false;
 state.UserData.broke = false;
 
 stimuli = program.Value.stimuli;
-% Needs to be modified for multiple reward cues
-stimuli = update_stimuli_position( stimuli, program );
-
 targets = program.Value.targets;
-targets = update_target_durations( targets, program );
-
 window = program.Value.window;
 
-% Use a function here to reset all targets
+% Set target positions here
+
+stimuli = update_stimuli_properties( stimuli, program );
+
+% Write a function here to reset all targets
 
 reset( targets.reward_cue );
 reset( targets.central_fixation );
 
-% Use a function here to draw all stimuli to a particular window
+% Write a function here to draw all stimuli
 
 draw( stimuli.reward_cue, window );
 draw( stimuli.central_fixation, window );
@@ -83,23 +82,18 @@ end
 
 end
 
-
-function out_stimuli = update_stimuli_position(stimuli, program)
+function out_stimuli = update_stimuli_properties(stimuli, program)
 
 out_stimuli = stimuli;
 
-rand_position = get_reward_cue_pos( program );
-out_stimuli.reward_cue.Position = set( out_stimuli.central_fixation.Position, rand_position );
-
-end
-
-function out_targets = update_target_durations( targets, program )
-
-out_targets = targets;
-
-% Fixation hold time
 structure = program.Value.structure;
-out_targets.central_fixation.Duration = structure.fixation_hold_time;
+
+% Set fixation hold duration
+out_stimuli.central_fixation.Duration = structure.fixation_hold_time;
+
+% Set reward cue positions
+rand_position = get_reward_cue_pos( program );
+out_stimuli.reward_cue.Position = set( out_stimuli.reward_cue.Position, rand_position );
 
 end
 

@@ -17,11 +17,12 @@ state.UserData.entered = false;
 state.UserData.broke = false;
 
 stimuli = program.Value.stimuli;
-targets = program.Value.targets;
-window = program.Value.window;
+stimuli = update_stimuli_position( stimuli, program );
 
-rand_position = get_central_fix_pos( program );
-stimuli.central_fixation.Position = set( stimuli.central_fixation.Position, rand_position );
+targets = program.Value.targets;
+targets = update_target_durations( targets, program );
+
+window = program.Value.window;
 
 reset( targets.central_fixation );
 draw( stimuli.central_fixation, window );
@@ -65,13 +66,33 @@ if ( state.UserData.acquired )
     if any( strcmp(state_names,'decision') )
         next( state, states('decision') );
     else
-        next( state, states('task_iti') );
+        next( state, states('prob_reward') );
     end
 else
     next( state, states('error_iti') );
 end
 
 end
+
+function out_stimuli = update_stimuli_position(stimuli, program)
+
+out_stimuli = stimuli;
+
+rand_position = get_central_fix_pos( program );
+out_stimuli.central_fixation.Position = set( out_stimuli.central_fixation.Position, rand_position );
+
+end
+
+function out_targets = update_target_durations( targets, program )
+
+out_targets = targets;
+
+% Fixation time
+structure = program.Value.structure;
+out_targets.central_fixation.Duration = structure.fixation_time;
+
+end
+
 
 function position = get_central_fix_pos(program)
 

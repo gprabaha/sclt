@@ -23,7 +23,7 @@ debug_window = program.Value.debug_window;
 
 % stimuli.choice0.Position = set( stimuli.choice0.Position, rand(1, 2) );
 
-% Use 
+% Here we have to draw each target 
 
 reset( targets.reward_cue );
 reset( targets.central_fixation );
@@ -41,10 +41,6 @@ end
 end
 
 function loop(state, program)
-
-%% Edit!!
-% Loop has to check through all reward cues and abort either if any of the
-% target has been collected or if fixation broke in the attempt
 
 targ = program.Value.targets.reward_cue;
 

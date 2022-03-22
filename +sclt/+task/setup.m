@@ -380,6 +380,7 @@ end
 
 function stimuli = make_stimuli(program, window, conf)
 
+structure = get_structure( conf );
 stim_setup = get_stimuli_setup( conf );
 stim_names = fieldnames( stim_setup );
 
@@ -387,6 +388,17 @@ stimuli = struct();
 
 for i = 1:numel(stim_names)
   stim_name = stim_names{i};
+  % Add code here to iterate through n number of reward_cue target types
+  if ( strcmp(stim_name, 'reward_cue') )
+    % Generate structure.num_patches patch stimuli.
+    for j = 1:structure.num_targets
+      use_name = sclt.util.nth_reward_cue_name( j );
+      stimuli.(use_name) = make_stimulus( window, stim_setup.(stim_name) );
+    end
+  else
+    % Otherwise, just generate a single stimulus.
+    stimuli.(stim_name) = make_stimulus( window, stim_setup.(stim_name) );
+  end
   stimuli.(stim_name) = make_stimulus( window, stim_setup.(stim_name) );
 end
 

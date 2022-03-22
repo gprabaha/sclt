@@ -3,6 +3,8 @@ function deliver_reward(program, channel, for_time)
 ni_reward_manager = program.Value.ni_reward_manager;
 arduino_reward_manager = program.Value.arduino_reward_manager;
 
+disp('Delivering reard!');
+
 if ( ~isempty(ni_reward_manager) )
   trigger( ni_reward_manager, for_time );
   
