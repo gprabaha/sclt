@@ -60,8 +60,9 @@ conf.REWARDS.key_press = 0.1;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 conf.INTERFACE.gaze_source_type = 'digital_eyelink';  % 'mouse', 'digital_eyelink', 'analog_input'
-conf.INTERFACE.reward_output_type = 'ni'; % 'arduino', 'ni', 'none'
+conf.INTERFACE.reward_output_type = 'arduino'; % 'arduino', 'ni', 'none'
 conf.INTERFACE.save_data = false;
+conf.INTERFACE.stop_key = KbName( 'escape' );
 
 %%%%%%%%%%%%%%%%%%
 % Screen details %
@@ -73,7 +74,7 @@ conf.SCREEN.index = 3;
 conf.SCREEN.calibration_rect = calibration_rect;
 % Debug screen
 % conf.DEBUG_SCREEN.is_present = true;
-conf.DEBUG_SCREEN.is_present = false;
+conf.DEBUG_SCREEN.is_present = true;
 conf.DEBUG_SCREEN.index = 1;
 conf.DEBUG_SCREEN.background_color = [ 0 0 0 ];
 % Debug screen rect accounts for resolution of monkey monitor

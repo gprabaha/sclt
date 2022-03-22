@@ -28,8 +28,6 @@ end
 
 sclt.util.deliver_reward( program, 1, quantity );
 
-
-
 end
 
 function loop(state, program)

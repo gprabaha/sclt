@@ -54,7 +54,7 @@ make_eye_tracker_sync( program, conf );
 make_reward_manager( program, conf, ni_scan_output );
 
 stimuli = make_stimuli( program, window, conf );
-images = make_images( program, conf );
+% images = make_images( program, conf );
 make_targets( program, updater, window, sampler, stimuli, conf );
 
 make_structure( program, conf );
@@ -200,6 +200,7 @@ if (debug_window_is_present)
   open( debug_window );
   enable_blending( debug_window );
 else
+  debug_window = [];
   program.Value.debug_window_is_present = false;
 end
 
