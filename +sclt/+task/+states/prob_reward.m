@@ -21,6 +21,9 @@ state.UserData.broke = false;
 % Draw the acquired target in the reward
 
 flip( program.Value.window );
+
+sclt.util.state_entry_timestamp( program, state );
+
 if program.Value.config.DEBUG_SCREEN.is_present
     flip( program.Value.debug_window );
 end
@@ -46,6 +49,7 @@ quantity = program.Value.rewards.prob_reward;
 sclt.util.deliver_reward( program, 1, quantity );
 
 states = program.Value.states;
+sclt.util.state_exit_timestamp( program, state );
 next( state, states('task_iti') );
 
 end

@@ -57,6 +57,7 @@ INTERFACE.skip_sync_tests = false;
 INTERFACE.tracker_sync_interval = 1;
 INTERFACE.allow_hide_mouse = false;
 INTERFACE.save_data = false;
+INTERFACE.num_trials_to_display = 10;
 
 %	SCREEN
 SCREEN = struct();
@@ -73,7 +74,6 @@ TIMINGS = struct();
 time_in = struct();
 time_in.new_trial = 0;
 time_in.fixation = 5;
-time_in.initial_fixation = 5;
 time_in.decision = 1;
 time_in.choice = 2;
 time_in.var_delay = 1;

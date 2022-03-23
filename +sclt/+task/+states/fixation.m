@@ -1,8 +1,8 @@
-function state = initial_fixation(program, conf)
+function state = fixation(program, conf)
 
 state = ptb.State();
-state.Name = 'initial_fixation';
-state.Duration = conf.TIMINGS.time_in.initial_fixation;
+state.Name = 'fixation';
+state.Duration = conf.TIMINGS.time_in.fixation;
 
 state.Entry = @(state) entry(state, program);
 state.Loop = @(state) loop(state, program);
@@ -20,13 +20,16 @@ stimuli = program.Value.stimuli;
 stimuli = update_stimuli_position( stimuli, program );
 
 targets = program.Value.targets;
-targets = update_target_durations( target, program );
+targets = update_target_durations( targets, program );
 
 window = program.Value.window;
 
 reset( targets.central_fixation );
 draw( stimuli.central_fixation, window );
 flip( window );
+
+sclt.util.state_entry_timestamp( program, state );
+program.Value.data.Value(end).(state.Name).initiated_fixation = false;
 
 if program.Value.config.DEBUG_SCREEN.is_present
     debug_window = program.Value.debug_window;
@@ -42,15 +45,16 @@ targ = program.Value.targets.central_fixation;
 
 if ( targ.IsInBounds )
   state.UserData.entered = true;
-  
+  program.Value.data.Value(end).(state.Name).initiated_fixation = true;
   if ( targ.IsDurationMet )
       state.UserData.acquired = true;
+      program.Value.data.Value(end).(state.Name).acquired_fixation = true;
       escape( state );
-      return;
+      return
   end
-  
 elseif ( state.UserData.entered )
   state.UserData.broke = true;
+  program.Value.data.Value(end).(state.Name).acquired_fixation = false;
   escape( state );
   return
 end
@@ -63,31 +67,35 @@ states = program.Value.states;
 state_names = keys( states );
 
 if ( state.UserData.acquired )
-    if any( strcmp(state_names,'decision') )
-        next( state, states('decision') );
-    else
-        next( state, states('prob_reward') );
-    end
+  if any( strcmp(state_names,'decision') )
+    sclt.util.state_exit_timestamp( program, state );
+    next( state, states('decision') );
+  else
+    sclt.util.state_exit_timestamp( program, state );
+    next( state, states('prob_reward') );
+  end
 else
-    next( state, states('error_iti') );
+  sclt.util.state_exit_timestamp( program, state );
+  next( state, states('error_iti') );
 end
 
 end
 
-function out_stimuli = update_stimuli_position(stimuli, program)
+function stimuli = update_stimuli_position(stimuli, program)
 
-out_stimuli = stimuli;
-
-structure = program.Value.structure;
-
-% Set fixation square location here
 rand_position = get_central_fix_pos( program );
-out_stimuli.central_fixation.Position = set( out_stimuli.central_fixation.Position, rand_position );
-
-% Set the duration of fixation here
-out_stimuli.central_fixation.Duration = set( out_stimuli.central_fixation.Duration, structure.fixation_time );
+stimuli.central_fixation.Position = set( stimuli.central_fixation.Position, rand_position );
 
 end
+
+function targets = update_target_durations( targets, program )
+
+% Fixation time
+structure = program.Value.structure;
+targets.central_fixation.Duration = structure.fixation_time;
+
+end
+
 
 function position = get_central_fix_pos(program)
 

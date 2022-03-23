@@ -36,6 +36,8 @@ draw( stimuli.reward_cue, window );
 draw( stimuli.central_fixation, window );
 flip( window );
 
+sclt.util.state_entry_timestamp( program, state );
+
 if program.Value.config.DEBUG_SCREEN.is_present
     debug_window = program.Value.debug_window;
     draw( stimuli.reward_cue, debug_window );
@@ -54,12 +56,14 @@ if ( targ.IsInBounds )
   
   if ( targ.IsDurationMet )
       state.UserData.acquired = true;
+      program.Value.data.Value(end).(state.Name).held_fixation = true;
       escape( state );
       return;
   end
   
 elseif ( state.UserData.entered )
   state.UserData.broke = true;
+  program.Value.data.Value(end).(state.Name).held_fixation = false;
   escape( state );
   return
 end
@@ -72,34 +76,33 @@ states = program.Value.states;
 state_names = keys( states );
 
 if ( state.UserData.acquired )
-    if any( strcmp(state_names,'choice') )
-        next( state, states('choice') );
-    else
-        next( state, states('prob_reward') );
-    end
+  if any( strcmp(state_names,'choice') )
+    sclt.util.state_exit_timestamp( program, state );
+    next( state, states('choice') );
+  else
+    sclt.util.state_exit_timestamp( program, state );
+    next( state, states('prob_reward') );
+  end
 else
-    next( state, states('error_iti') );
+  sclt.util.state_exit_timestamp( program, state );
+  next( state, states('error_iti') );
 end
 
 end
 
 
-function out_stimuli = update_stimuli_position(stimuli, program)
-
-out_stimuli = stimuli;
+function stimuli = update_stimuli_position(stimuli, program)
 
 rand_position = get_reward_cue_pos( program );
-out_stimuli.reward_cue.Position = set( out_stimuli.central_fixation.Position, rand_position );
+stimuli.reward_cue.Position = set( stimuli.central_fixation.Position, rand_position );
 
 end
 
-function out_targets = update_target_durations( targets, program )
-
-out_targets = targets;
+function targets = update_target_durations( targets, program )
 
 % Fixation hold time
 structure = program.Value.structure;
-out_targets.central_fixation.Duration = structure.fixation_hold_time;
+targets.central_fixation.Duration = structure.fixation_hold_time;
 
 end
 

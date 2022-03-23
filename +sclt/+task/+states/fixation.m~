@@ -1,8 +1,8 @@
-function state = initial_fixation(program, conf)
+function state = fixation(program, conf)
 
 state = ptb.State();
-state.Name = 'initial_fixation';
-state.Duration = conf.TIMINGS.time_in.initial_fixation;
+state.Name = 'fixation';
+state.Duration = conf.TIMINGS.time_in.fixation;
 
 state.Entry = @(state) entry(state, program);
 state.Loop = @(state) loop(state, program);
@@ -11,6 +11,8 @@ state.Exit = @(state) exit(state, program);
 end
 
 function entry(state, program)
+
+program.Value.data.Value(end).(state.Name).entry_time = 
 
 state.UserData.acquired = false;
 state.UserData.entered = false;
@@ -28,6 +30,8 @@ reset( targets.central_fixation );
 draw( stimuli.central_fixation, window );
 flip( window );
 
+sclt.util.state_entry_timestamp( program, state );
+
 if program.Value.config.DEBUG_SCREEN.is_present
     debug_window = program.Value.debug_window;
     draw( stimuli.central_fixation, debug_window );
@@ -42,9 +46,11 @@ targ = program.Value.targets.central_fixation;
 
 if ( targ.IsInBounds )
   state.UserData.entered = true;
+  program.Value.data.Value(end).(state.Name).initiated_fixation = true;
   
   if ( targ.IsDurationMet )
       state.UserData.acquired = true;
+      program.Value.data.Value(end).(state.Name).initiated_fixation = true;
       escape( state );
       return;
   end
@@ -63,33 +69,32 @@ states = program.Value.states;
 state_names = keys( states );
 
 if ( state.UserData.acquired )
-    if any( strcmp(state_names,'decision') )
-        next( state, states('decision') );
-    else
-        next( state, states('prob_reward') );
-    end
+  if any( strcmp(state_names,'decision') )
+    sclt.util.state_exit_timestamp( program, state );
+    next( state, states('decision') );
+  else
+    sclt.util.state_exit_timestamp( program, state );
+    next( state, states('prob_reward') );
+  end
 else
-    next( state, states('error_iti') );
+  sclt.util.state_exit_timestamp( program, state );
+  next( state, states('error_iti') );
 end
 
 end
 
-function out_stimuli = update_stimuli_position(stimuli, program)
-
-out_stimuli = stimuli;
+function stimuli = update_stimuli_position(stimuli, program)
 
 rand_position = get_central_fix_pos( program );
-out_stimuli.central_fixation.Position = set( out_stimuli.central_fixation.Position, rand_position );
+stimuli.central_fixation.Position = set( stimuli.central_fixation.Position, rand_position );
 
 end
 
-function out_targets = update_target_durations( targets, program )
-
-out_targets = targets;
+function targets = update_target_durations( targets, program )
 
 % Fixation time
 structure = program.Value.structure;
-out_targets.central_fixation.Duration = structure.fixation_time;
+targets.central_fixation.Duration = structure.fixation_time;
 
 end
 

@@ -99,7 +99,6 @@ end
 function data = make_data(program, conf)
 
 data = ptb.Reference();
-data.Value = sclt.task.Data.empty();
 
 program.Value.data = data;
 

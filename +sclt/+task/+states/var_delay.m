@@ -14,6 +14,9 @@ function entry(state, program)
 % Write a function to get variable delay here and updatr state.Duration
 
 flip( program.Value.window );
+
+sclt.util.state_entry_timestamp( program, state );
+
 if program.Value.config.DEBUG_SCREEN.is_present
     flip( program.Value.debug_window );
 end
@@ -22,6 +25,8 @@ end
 
 function exit(state, program)
 
-next( state, program.Value.states('prob_reward') );
+states = program.Value.states;
+sclt.util.state_exit_timestamp( program, state );
+next( state, states('prob_reward') );
 
 end

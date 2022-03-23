@@ -31,6 +31,7 @@ reset( targets.central_fixation );
 draw( stimuli.reward_cue, window );
 flip( window );
 
+sclt.util.state_entry_timestamp( program, state );
 
 if program.Value.config.DEBUG_SCREEN.is_present
     debug_window = program.Value.debug_window;
@@ -71,13 +72,16 @@ states = program.Value.states;
 state_names = keys( states );
 
 if ( state.UserData.acquired )
-    if any( strcmp(state_names,'var_delay') )
-        next( state, states('var_delay') );
-    else
-        next( state, states('prob_reward') );
-    end
+  if any( strcmp(state_names,'var_delay') )
+    sclt.util.state_exit_timestamp( program, state );
+    next( state, states('var_delay') );
+  else
+    sclt.util.state_exit_timestamp( program, state );
+    next( state, states('prob_reward') );
+  end
 else
-    next( state, states('error_iti') );
+  sclt.util.state_exit_timestamp( program, state );
+  next( state, states('error_iti') );
 end
 
 

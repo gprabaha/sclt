@@ -90,12 +90,9 @@ data(end) = [];
 allTrialNumber = flip( [ data.trial_number ] );
 fixation_data = flip( [ data.fixation ] );
 allInitiatedFixation = [ fixation_data.initiated_fixation ];
-allInitiatedFixation( isnan( allInitiatedFixation ) ) = false;
 allAcquiredFixation = [ fixation_data.acquired_fixation ];
-allAcquiredFixation( isnan( allAcquiredFixation ) ) = false;
 decision_data = flip( [ data.decision ] );
 allHeldFixation = [ decision_data.held_fixation ];
-allHeldFixation( isnan( allHeldFixation ) ) = false;
 
 num_trials = numel(data);
 start_ind = 1;
@@ -115,15 +112,17 @@ total_fixation_held = sum( allHeldFixation );
 
 snippet = 1:min(num_trials, 20);
 initiated_in_last_20 = sum( allInitiatedFixation(snippet) );
-fixations_in_last_20 = sum( allAcquiredFixation(snippet) );
+fixations_in_last_20 = sum( allAcquiredFixatio(snippet) );
 fixation_held_in_last_20 = sum( allHeldFixation(snippet) );
 
-fprintf( 'Ratio of:\n')
-fprintf( 'Initiated trials : Total trials;  Overall = %0.3f; Last 20 trials = %0.3f\n',...
-  total_initiated_trials/num_trials, initiated_in_last_20/numel(snippet) );
-fprintf( 'Fix acquired : Fix initiated;     Overall = %0.3f; Last 20 trials = %0.3f\n',...
-  total_fixations/total_initiated_trials, fixations_in_last_20/initiated_in_last_20 );
-fprintf( 'Fix held : Fix initiated;         Overall = %0.3f; Last 20 trials = %0.3f\n',...
-  total_fixation_held/total_initiated_trials, fixation_held_in_last_20/initiated_in_last_20 );
+fprintf('\nRatio of:\n')
+fprintf('Initiated trials : Total trials = %0.3f\n', total_initiated_trials/num_trials);
+fprintf('Fix acquired : Fix initiated = %0.3f\n', total_fixations/total_initiated_trials);
+fprintf('Fix held : Fix initiated = %0.3f\n', total_fixation_held/total_initiated_trials);
+fprintf('\nLast 20 trials:\n')
+fprintf('Initiated trials : Total trials = %0.3f\n', initiated_in_last_20/num_trials);
+fprintf('Fix acquired : Fix initiated = %0.3f\n', fixations_in_last_20/initiated_in_last_20);
+fprintf('Fix held : Fix initiated = %0.3f\n\n', fixation_held_in_last_20/initiated_in_last_20);
+
 
 end
