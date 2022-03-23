@@ -53,12 +53,12 @@ make_eye_tracker_sync( program, conf );
 
 make_reward_manager( program, conf, ni_scan_output );
 
+make_structure( program, conf );
+make_interface( program, conf );
+
 stimuli = make_stimuli( program, window, conf );
 % images = make_images( program, conf );
 make_targets( program, updater, window, sampler, stimuli, conf );
-
-make_structure( program, conf );
-make_interface( program, conf );
 
 handle_cursor( program, conf );
 handle_keyboard( program, conf );
@@ -398,7 +398,6 @@ for i = 1:numel(stim_names)
     % Otherwise, just generate a single stimulus.
     stimuli.(stim_name) = make_stimulus( window, stim_setup.(stim_name) );
   end
-  stimuli.(stim_name) = make_stimulus( window, stim_setup.(stim_name) );
 end
 
 program.Value.stimuli = stimuli;
@@ -476,6 +475,7 @@ function targets = make_targets(program, updater, window, sampler, stimuli, conf
 
 stim_setup = get_stimuli_setup( conf );
 stim_names = fieldnames( stim_setup );
+structure = program.Value.structure;
 
 targets = struct();
 
@@ -484,10 +484,20 @@ for i = 1:numel(stim_names)
   stim_descr = stim_setup.(stim_name);
   
   if ( stim_descr.has_target )
-    stimulus = stimuli.(stim_name);
-    target = make_target( stim_descr, stimulus, sampler, window );
-    updater.add_component( target );
-    targets.(stim_name) = target;
+    if ( strcmp(stim_name, 'reward_cue') )
+      for j = 1:structure.num_targets
+        use_name = sclt.util.nth_reward_cue_name( j );
+        stimulus = stimuli.(use_name);
+        target = make_target( stim_descr, stimulus, sampler, window );
+        updater.add_component( target );
+        targets.(stim_name) = target;
+      end
+    else
+      stimulus = stimuli.(stim_name);
+      target = make_target( stim_descr, stimulus, sampler, window );
+      updater.add_component( target );
+      targets.(stim_name) = target;
+    end
   end
 end
 

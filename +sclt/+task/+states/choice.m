@@ -17,25 +17,19 @@ state.UserData.entered = false;
 state.UserData.broke = false;
 
 stimuli = program.Value.stimuli;
+num_targets = program.Value.structure.num_targets;
 targets = program.Value.targets;
 window = program.Value.window;
-debug_window = program.Value.debug_window;
 
-% stimuli.choice0.Position = set( stimuli.choice0.Position, rand(1, 2) );
-
-% Use 
-
-reset( targets.reward_cue );
-reset( targets.central_fixation );
-
-draw( stimuli.reward_cue, window );
+reset_all( targets, num_targets );
+draw_all( stimuli, num_targets, window );
 flip( window );
 
 sclt.util.state_entry_timestamp( program, state );
 
 if program.Value.config.DEBUG_SCREEN.is_present
     debug_window = program.Value.debug_window;
-    draw( stimuli.reward_cue, debug_window );
+    draw_all( stimuli, num_targets, debug_window );
     flip( debug_window );
 end
 
@@ -47,7 +41,7 @@ function loop(state, program)
 % Loop has to check through all reward cues and abort either if any of the
 % target has been collected or if fixation broke in the attempt
 
-targ = program.Value.targets.reward_cue;
+targ = program.Value.targets.reward_cue1;
 
 if ( targ.IsInBounds )
   state.UserData.entered = true;
@@ -84,5 +78,23 @@ else
   next( state, states('error_iti') );
 end
 
+
+end
+
+function reset_all(targets, num_targets)
+
+for i=1:num_targets
+  targ_name = sclt.util.nth_reward_cue_name( i );
+  reset( targets.(targ_name) );
+end
+
+end
+
+function draw_all(stimuli, num_targets, window)
+
+for i=1:num_targets
+  targ_name = sclt.util.nth_reward_cue_name( i );
+  draw( stimuli.(targ_name), window );
+end
 
 end
