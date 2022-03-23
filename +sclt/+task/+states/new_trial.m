@@ -84,6 +84,14 @@ function display_trial_performance( program )
 clc;
 num_trials_to_display = program.Value.config.INTERFACE.num_trials_to_display;
 
+structure = program.Value.structure;
+
+fprintf('Fixation time = %0.2f; Fixation hold time = %0.2f; Target collection time = %0.2f\n\n',...
+  structure.fixation_time,...
+  structure.fixation_hold_time,...
+  structure.target_collection_time...
+)
+
 data = program.Value.data.Value;
 data(end) = [];
 
