@@ -106,8 +106,8 @@ fix_radius = structure.fix_position_radius;
 span = fix_radius - 0;
 
 offset_seed = rand( 1, 2 );
-signed_offset = [1, 1] - 2 * offset_seed;  % Unif random number from -1 to 1
-normalized_offset = signed_offset * span;
+signed_offset = [1, 1] - 2*offset_seed;  % Unif random number from -1 to 1
+normalized_offset = span*signed_offset;
 
 position = position + normalized_offset;
 

@@ -27,6 +27,8 @@ conf.STRUCTURE.num_trials_per_block = 50;
 conf.STRUCTURE.target_position_radius  = 0.4; % Targets appear with inner radius of fix radius and outer radius as this
 conf.STRUCTURE.target_types = {'self', 'other', 'neither'};
 conf.STRUCTURE.target_rew_probs = [0.2 0.8];
+conf.STRUCTURE.incorporate_var_delay = false;
+conf.STRUCTURE.var_delay_times = linspace( 0.4, 0.6, 5 );
 
 % Timings
 conf.TIMINGS.time_in.new_trial = 0;

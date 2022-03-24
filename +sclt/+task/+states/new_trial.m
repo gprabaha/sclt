@@ -71,6 +71,7 @@ else
       data_scaffold.(state).target_entry_times = nan( 1, num_targets );
       data_scaffold.(state).targets_acquired = nan( 1, num_targets );
     case 'prob_reward'
+      data_scaffold.(state).reward_start_time = nan;
       data_scaffold.(state).was_reward_delivered = nan;
     case 'var_delay'
       data_scaffold.(state).delay_period = nan;

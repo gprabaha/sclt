@@ -46,10 +46,25 @@ function exit(state, program)
 % probability
 
 quantity = program.Value.rewards.prob_reward;
+incorporate_var_delay = program.Value.structure.incorporate_var_delay;
+if incorporate_var_delay
+  pause_duration = get_var_delay(program);
+  disp( ['Delay amount: ' num2str( pause_duration )] );
+  pause( pause_duration );
+end
+sclt.util.update_reward_start_time( program, state );
 sclt.util.deliver_reward( program, 1, quantity );
 
 states = program.Value.states;
 sclt.util.state_exit_timestamp( program, state );
 next( state, states('task_iti') );
+
+end
+
+function var_delay = get_var_delay(program)
+
+structure = program.Value.structure;
+var_delay_times = structure.var_delay_times;
+var_delay = randsample( var_delay_times, 1 );
 
 end

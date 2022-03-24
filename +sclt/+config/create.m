@@ -47,6 +47,8 @@ STRUCTURE.num_trials_per_block = 50;
 STRUCTURE.target_position_radius  = 0.5; % Targets appear with inner radius of fix radius and outer radius as this
 STRUCTURE.target_types = {'self', 'other', 'neither'};
 STRUCTURE.target_rew_probs = [0.2 0.8];
+STRUCTURE.incorporate_var_delay = false;
+STRUCTURE.var_delay_times = [0.4 0.45 0.5 0.55 0.6];
 
 %	INTERFACE
 INTERFACE = struct();
@@ -76,7 +78,7 @@ time_in.new_trial = 0;
 time_in.fixation = 5;
 time_in.decision = 1;
 time_in.choice = 2;
-time_in.var_delay = 1;
+time_in.var_delay = 0;
 time_in.prob_reward = 1;
 time_in.fix_delay = 0.5;
 time_in.det_reward = 1;
