@@ -101,9 +101,11 @@ allInitiatedFixation = [ fixation_data.initiated_fixation ];
 allInitiatedFixation( isnan( allInitiatedFixation ) ) = false;
 allAcquiredFixation = [ fixation_data.acquired_fixation ];
 allAcquiredFixation( isnan( allAcquiredFixation ) ) = false;
-decision_data = flip( [ data.decision ] );
-allHeldFixation = [ decision_data.held_fixation ];
-allHeldFixation( isnan( allHeldFixation ) ) = false;
+if isfield( data, 'decision' )
+  decision_data = flip( [ data.decision ] );
+  allHeldFixation = [ decision_data.held_fixation ];
+  allHeldFixation( isnan( allHeldFixation ) ) = false;
+end
 
 num_trials = numel(data);
 start_ind = 1;
@@ -112,26 +114,35 @@ snippet = start_ind:end_ind;
 TrialNumber = allTrialNumber(snippet)';
 InitiatedFixation = allInitiatedFixation(snippet)';
 AcquiredFixation = allAcquiredFixation(snippet)';
-HeldFixation = allHeldFixation(snippet)';
+disp_data = table(TrialNumber, InitiatedFixation, AcquiredFixation);
+if isfield( data, 'decision' )
+  HeldFixation = allHeldFixation(snippet)';
+  disp_data = table(TrialNumber, InitiatedFixation, AcquiredFixation, HeldFixation);
+end
 
-disp_data = table(TrialNumber, InitiatedFixation, AcquiredFixation, HeldFixation);
 disp( disp_data );
 
 total_initiated_trials = sum( allInitiatedFixation );
 total_fixations = sum( allAcquiredFixation );
-total_fixation_held = sum( allHeldFixation );
+if isfield( data, 'decision' )
+  total_fixation_held = sum( allHeldFixation );
+end
 
 snippet = 1:min(num_trials, 20);
 initiated_in_last_20 = sum( allInitiatedFixation(snippet) );
 fixations_in_last_20 = sum( allAcquiredFixation(snippet) );
-fixation_held_in_last_20 = sum( allHeldFixation(snippet) );
+if isfield( data, 'decision' )
+  fixation_held_in_last_20 = sum( allHeldFixation(snippet) );
+end
 
 fprintf( 'Ratio of:\n')
 fprintf( 'Initiated trials : Total trials;  Overall = %0.3f; Last 20 trials = %0.3f\n',...
   total_initiated_trials/num_trials, initiated_in_last_20/numel(snippet) );
 fprintf( 'Fix acquired : Fix initiated;     Overall = %0.3f; Last 20 trials = %0.3f\n',...
   total_fixations/total_initiated_trials, fixations_in_last_20/initiated_in_last_20 );
-fprintf( 'Fix held : Fix initiated;         Overall = %0.3f; Last 20 trials = %0.3f\n',...
-  total_fixation_held/total_initiated_trials, fixation_held_in_last_20/initiated_in_last_20 );
+if isfield( data, 'decision' )
+  fprintf( 'Fix held : Fix initiated;         Overall = %0.3f; Last 20 trials = %0.3f\n',...
+    total_fixation_held/total_initiated_trials, fixation_held_in_last_20/initiated_in_last_20 );
+end
 
 end
