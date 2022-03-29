@@ -19,6 +19,9 @@ else
   program.Value.data.Value(end+1) = data_scaffold;
   display_trial_performance( program );
 end
+if strcmp( program.Value.conf.INTERFACE.gaze_source_type, 'digital_eyelink' )
+  sclt.util.el_draw_rect( 0 );
+end
 
 end
 

@@ -28,6 +28,9 @@ window = program.Value.window;
 reset_all( targets );
 draw_all( stimuli, num_targets, window );
 flip( window );
+if strcmp( program.Value.conf.INTERFACE.gaze_source_type, 'digital_eyelink' )
+  draw_targets_on_eyelink( targets, num_targets );
+end
 
 sclt.util.state_entry_timestamp( program, state );
 
@@ -138,6 +141,22 @@ draw( stimuli.central_fixation, window );
 for i=1:num_targets
   targ_name = sclt.util.nth_reward_cue_name( i );
   draw( stimuli.(targ_name), window );
+end
+
+end
+
+function draw_targets_on_eyelink(targets, num_targets, color)
+
+if nargin < 3
+  color = 3;
+end
+
+rect = get_bounding_rect( targets.central_fixation.Bounds );
+sclt.util.el_draw_rect( rect, color );
+for i=1:num_targets
+  targ_name = sclt.util.nth_reward_cue_name( i );
+  rect = get_bounding_rect( targets.(targ_name).Bounds );
+  sclt.util.el_draw_rect( rect, color );
 end
 
 end

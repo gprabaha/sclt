@@ -25,6 +25,4 @@ conf.REWARDS.prob_reward = 0.2;
 conf.REWARDS.det_reward = 0.05;
 conf.REWARDS.key_press = 0.1;
 
-conf.STIMULI.setup.central_fixation.target_duration = 0.1;
-
 sclt.task.start( conf );

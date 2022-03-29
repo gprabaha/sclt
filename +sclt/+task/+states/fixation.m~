@@ -27,10 +27,12 @@ window = program.Value.window;
 reset( targets.central_fixation );
 
 draw( stimuli.central_fixation, window );
-flip( window );
+rect = get_bounding_rect( targets.central_fixation.Bounds );
 if strcmp( program.Value.conf.INTERFACE.gaze_source_type, 'digital_eyelink' )
-  draw_targets_on_eyelink( targets );
+  draw_targets_on_eyelink( rect, color );
+  sclt.util.el_draw_rect( rect, 3 );
 end
+flip( window );
 
 sclt.util.state_entry_timestamp( program, state );
 program.Value.data.Value(end).(state.Name).initiated_fixation = false;
@@ -114,15 +116,5 @@ signed_offset = [1, 1] - 2*offset_seed;  % Unif random number from -1 to 1
 normalized_offset = span*signed_offset;
 
 position = position + normalized_offset;
-
-end
-
-function draw_targets_on_eyelink(targets, color)
-
-if nargin < 2
-  color = 3;
-end
-rect = get_bounding_rect( targets.central_fixation.Bounds );
-sclt.util.el_draw_rect( rect, color );
 
 end
