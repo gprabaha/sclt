@@ -1,6 +1,10 @@
 function shutdown(program)
 
-save_data( program );
+try
+  save_data( program );
+catch err
+  warning( err.message );
+end
 
 close_window( program );
 close_arduino( program );
