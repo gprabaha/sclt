@@ -98,7 +98,6 @@ end
 data_p = program.Value.data_directory;
 data_remote = program.Value.remote_data_directory;
 shared_utils.io.require_dir( data_p );
-shared_utils.io.require_dir( data_remote );
 data_fname = sprintf( 'sclt-%s', strrep(datestr(now), ':', '_') );
 
 % Convert to struct to avoid needing access to the sclt.task.Data class to
@@ -108,6 +107,5 @@ simple_data = arrayfun( @struct, data );
 warning( 'on', 'all' );
 
 save( fullfile(data_p, data_fname), 'simple_data' );
-save( fullfile(data_remote, data_fname), 'simple_data' );
 
 end

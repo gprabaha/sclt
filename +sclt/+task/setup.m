@@ -23,12 +23,20 @@ program.Destruct = @sclt.task.shutdown;
 program.Value.debug = struct();
 program.Value.config = conf;
 program.Value.data_directory = session_data_directory( conf );
+program.Value.remote_data_directory = session_remote_data_directory( conf );
+
 
 end
 
 function dir = session_data_directory(conf)
 
 dir = fullfile( conf.PATHS.data, datestr(now, 'mmddyy') );
+
+end
+
+function dir = session_remote_data_directory(conf)
+
+dir = fullfile( conf.PATHS.remote, datestr(now, 'mmddyy') );
 
 end
 

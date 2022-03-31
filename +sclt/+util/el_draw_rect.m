@@ -1,5 +1,6 @@
 function el_draw_rect( rect, color )
 
+rect = round(rect);
 if ( numel(rect) == 1 && rect(1) == 0 )
   Eyelink( 'Command', 'clear_screen 0' );
   return

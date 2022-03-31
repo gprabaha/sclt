@@ -28,7 +28,7 @@ window = program.Value.window;
 reset_all( targets );
 draw_all( stimuli, num_targets, window );
 flip( window );
-if strcmp( program.Value.conf.INTERFACE.gaze_source_type, 'digital_eyelink' )
+if strcmp( program.Value.config.INTERFACE.gaze_source_type, 'digital_eyelink' )
   draw_targets_on_eyelink( targets, num_targets );
 end
 

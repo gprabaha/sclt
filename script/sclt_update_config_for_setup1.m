@@ -64,7 +64,9 @@ conf.SERIAL.port = 'COM3';
 % Saving data %
 %%%%%%%%%%%%%%%
 conf.INTERFACE.save_data = true;
-conf.PATHS.remote = 'C:\Users\setup1\Dropbox (ChangLab)\prabaha_changlab\scl-training\fellini';
+conf.repositories = fileparts( sclt.util.get_project_folder() );
+conf.PATHS.data = fullfile( sclt.util.get_project_folder(), 'data' );
+conf.PATHS.remote = fullfile( 'C:\Users\setup1\Dropbox (ChangLab)\prabaha_changlab\scl-training\fellini', datestr(now, 'mmddyy'));
 
 
 %%%%%%%%%%%%%%%%%%%
