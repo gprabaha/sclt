@@ -121,11 +121,7 @@ else
   data_scaffold.trial_number = numel( program.Value.data.Value ) + 1;
 end
 
-data_scaffold.stimuli = program.Value.stimuli;
-data_scaffold.targets = program.Value.targets;
-data_scaffold.structure = program.Value.structure;
-data_scaffold.interface = program.Value.interface;
-data_scaffold.rewards = program.Value.rewards;
+data_scaffold.program = program.Value;
 
 for state_ind = 1:numel(state_names)
   state = state_names{state_ind};

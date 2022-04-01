@@ -16,27 +16,23 @@ state.UserData.acquired = false;
 state.UserData.entered = false;
 state.UserData.broke = false;
 
+num_rew_cues = program.Value.structure.num_rew_cues;
 stimuli = program.Value.stimuli;
-stimuli = update_stimuli_position( stimuli, program );
-num_targets = program.Value.structure.num_targets;
-
 targets = program.Value.targets;
-targets = update_target_durations( targets, program );
-
 window = program.Value.window;
-
 reset_all( targets );
-draw_all( stimuli, num_targets, window );
+draw_all( stimuli, num_rew_cues, window );
 flip( window );
+
 if strcmp( program.Value.config.INTERFACE.gaze_source_type, 'digital_eyelink' )
-  draw_targets_on_eyelink( targets, num_targets );
+  draw_targets_on_eyelink( targets, num_rew_cues );
 end
 
 sclt.util.state_entry_timestamp( program, state );
 
 if program.Value.config.DEBUG_SCREEN.is_present
     debug_window = program.Value.debug_window;
-    draw_all( stimuli, num_targets, debug_window );
+    draw_all( stimuli, num_rew_cues, debug_window );
     flip( debug_window );
 end
 
@@ -86,49 +82,6 @@ end
 end
 
 
-function stimuli = update_stimuli_position(stimuli, program)
-
-num_targets = program.Value.structure.num_targets;
-
-rand_position(1,:) = get_reward_cue_pos( program );
-if num_targets == 2
-  rand_position(2,:) = [1 1] - rand_position(1,:);
-end
-for target = 1:num_targets
-  stim_name = sclt.util.nth_reward_cue_name( target );
-  stimuli.(stim_name).Position = set( stimuli.central_fixation.Position, rand_position(target, :) );
-end
-
-end
-
-function targets = update_target_durations( targets, program )
-
-% Fixation hold time
-structure = program.Value.structure;
-targets.central_fixation.Duration = structure.fixation_hold_time;
-
-end
-
-
-function position = get_reward_cue_pos(program)
-
-position = [ 0.5, 0.5 ];
-
-structure = program.Value.structure;
-fix_radius = structure.fix_position_radius;
-target_radius = structure.target_position_radius;
-
-span = target_radius - fix_radius;
-
-offset_seed = rand( 1, 2 );
-signed_offset = [1, 1] - 2 * offset_seed;  % Unif random number from -1 to 1
-normalized_offset = (fix_radius .* sign( signed_offset )) + signed_offset * span;
-
-position = position + normalized_offset;
-
-end
-
-
 function reset_all(targets)
 
 reset( targets.central_fixation );
@@ -137,7 +90,7 @@ end
 
 function draw_all(stimuli, num_targets, window)
 
-draw( stimuli.central_fixation, window );
+draw( stimuli.central_fixation_hold, window );
 for i=1:num_targets
   targ_name = sclt.util.nth_reward_cue_name( i );
   draw( stimuli.(targ_name), window );

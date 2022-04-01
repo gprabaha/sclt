@@ -399,7 +399,7 @@ for i = 1:numel(stim_names)
   % Add code here to iterate through n number of reward_cue target types
   if ( strcmp(stim_name, 'reward_cue') )
     % Generate structure.num_patches patch stimuli.
-    for j = 1:structure.num_targets
+    for j = 1:structure.num_rew_cues
       use_name = sclt.util.nth_reward_cue_name( j );
       stimuli.(use_name) = make_stimulus( window, stim_setup.(stim_name) );
     end
@@ -494,7 +494,7 @@ for i = 1:numel(stim_names)
   
   if ( stim_descr.has_target )
     if ( strcmp(stim_name, 'reward_cue') )
-      for j = 1:structure.num_targets
+      for j = 1:structure.num_rew_cues
         use_name = sclt.util.nth_reward_cue_name( j );
         stimulus = stimuli.(use_name);
         target = make_target( stim_descr, stimulus, sampler, window );
