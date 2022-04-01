@@ -49,7 +49,7 @@ if ( targ.IsInBounds )
       state.UserData.acquired = true;
       program.Value.data.Value(end).(state.Name).held_fixation = true;
       escape( state );
-      return;
+      return
   end
   
 elseif ( state.UserData.entered )
@@ -84,7 +84,7 @@ end
 
 function reset_all(targets)
 
-reset( targets.central_fixation );
+reset( targets.central_fixation_hold );
 
 end
 
