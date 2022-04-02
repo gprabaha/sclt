@@ -50,10 +50,11 @@ conf.CALIB_SCREEN.calibration_rect = calibration_rect;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 conf.STIMULI.setup.central_fixation.size = [125, 125];
 conf.STIMULI.setup.central_fixation.target_padding = 40;
-% Add a fix-hold square or something like that to separate hold time and
-% fix time
+conf.STIMULI.setup.central_fixation_hold.size = [125, 125];
+conf.STIMULI.setup.central_fixation.target_padding = 40;
 conf.STIMULI.setup.reward_cue.size = [125, 125];
 conf.STIMULI.setup.reward_cue.target_padding = 40;
+conf.STIMULI.setup.gaze_cursor.size = [20, 20];
 
 %%%%%%%%%%%%%%%%%%%
 % Port for reward %

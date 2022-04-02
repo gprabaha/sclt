@@ -20,15 +20,17 @@ conf.STRUCTURE.target_position_radius  = 0.4; % Targets appear with inner radius
 conf.STRUCTURE.incorporate_var_delay = false;
 conf.STRUCTURE.var_delay_times = linspace( 0.4, 0.6, 5 );
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Fixation square properties %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-conf.STIMULI.setup.central_fixation.size = [175, 175];
-conf.STIMULI.setup.central_fixation.target_padding = 70;
-% Add a fix-hold square or something like that to separate hold time and
-% fix time
+%%%%%%%%%%%%%%%%%%%%%%
+% Stimuli Properties %
+%%%%%%%%%%%%%%%%%%%%%%
+conf.STIMULI.setup.central_fixation.size = [125, 125];
+conf.STIMULI.setup.central_fixation.target_padding = 40;
+conf.STIMULI.setup.central_fixation_hold.size = [125, 125];
+conf.STIMULI.setup.central_fixation.target_padding = 40;
 conf.STIMULI.setup.reward_cue.size = [125, 125];
 conf.STIMULI.setup.reward_cue.target_padding = 40;
+conf.STIMULI.setup.gaze_cursor.size = [20, 20];
+conf.STIMULI.setup.gaze_cursor.color = [255 255 0];
 
 
 conf.REWARDS.prob_reward = 0.2;

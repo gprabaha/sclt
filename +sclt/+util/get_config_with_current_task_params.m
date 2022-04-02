@@ -55,6 +55,7 @@ conf.DEBUG_SCREEN.rect = [600, 0, 800, 200];
 % stimuli
 conf.STIMULI.setup.central_fixation.size = [50, 50];  % px
 conf.STIMULI.setup.reward_cue.size = [50, 50];
+conf.STIMULI.setup.gaze_cursor.size = [20, 20];
 
 % interface
 conf.INTERFACE.gaze_source_type = 'mouse';  % 'mouse', 'digital_eyelink', 'analog_input'

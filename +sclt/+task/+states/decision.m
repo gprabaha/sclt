@@ -18,17 +18,17 @@ state.UserData.acquired = false;
 state.UserData.entered = false;
 state.UserData.broke = false;
 
-num_rew_cues = program.Value.structure.num_rew_cues;
-stimuli = program.Value.stimuli;
 targets = program.Value.targets;
-window = program.Value.window;
 reset_all( targets );
-draw_all( stimuli, num_rew_cues, window );
+window = program.Value.window;
+is_debug = false;
+draw_everything( program, window, is_debug );
 flip( window );
 if program.Value.config.DEBUG_SCREEN.is_present
-    debug_window = program.Value.debug_window;
-    draw_all( stimuli, num_rew_cues, debug_window );
-    flip( debug_window );
+  debug_window = program.Value.debug_window;
+  is_debug = true;
+  draw_everything( program, debug_window, is_debug );
+  flip( debug_window );
 end
 
 if strcmp( program.Value.config.INTERFACE.gaze_source_type, 'digital_eyelink' )
@@ -38,6 +38,17 @@ end
 end
 
 function loop(state, program)
+
+window = program.Value.window;
+is_debug = false;
+draw_everything( program, window, is_debug );
+flip( window );
+if program.Value.config.DEBUG_SCREEN.is_present
+  debug_window = program.Value.debug_window;
+  is_debug = true;
+  draw_everything( program, debug_window, is_debug );
+  flip( debug_window );
+end
 
 targ = program.Value.targets.central_fixation;
 
@@ -87,13 +98,17 @@ reset( targets.central_fixation_hold );
 
 end
 
-function draw_all(stimuli, num_targets, window)
 
+function draw_everything(program, window, is_debug)
+
+stimuli = program.Value.stimuli;
+num_rew_cues = program.Value.structure.num_rew_cues;
 draw( stimuli.central_fixation_hold, window );
-for i=1:num_targets
+for i=1:num_rew_cues
   stimui_name = sclt.util.nth_reward_cue_name( i );
   draw( stimuli.(stimui_name), window );
 end
+sclt.util.draw_gaze_cursor( program, window, is_debug );
 
 end
 

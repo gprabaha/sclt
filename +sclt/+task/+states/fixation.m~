@@ -18,12 +18,13 @@ state.UserData.acquired = false;
 state.UserData.entered = false;
 state.UserData.broke = false;
 
+stimuli = program.Value.stimuli;
 targets = program.Value.targets;
 window = program.Value.window;
 
 reset( targets.central_fixation );
-is_debug = false;
-draw_everything( program, window, is_debug );
+draw_everything(  );
+draw( stimuli.central_fixation, window );
 flip( window );
 if strcmp( program.Value.config.INTERFACE.gaze_source_type, 'digital_eyelink' )
   draw_targets_on_eyelink( targets );
@@ -33,8 +34,7 @@ program.Value.data.Value(end).(state.Name).initiated_fixation = false;
 
 if program.Value.config.DEBUG_SCREEN.is_present
     debug_window = program.Value.debug_window;
-    is_debug = true;
-    draw_everything( program, window, is_debug );
+    draw( stimuli.central_fixation, debug_window );
     flip( debug_window );
 end
 
@@ -44,14 +44,12 @@ function loop(state, program)
 
 window = program.Value.window;
 is_debug = false;
-draw_everything( program, window, is_debug );
-flip( window );
+draw_cursor( program, window, is_debug );
 
 if program.Value.config.DEBUG_SCREEN.is_present
   debug_window = program.Value.debug_window;
   is_debug = true;
-  draw_everything( program, debug_window, is_debug );
-  flip( debug_window );
+  draw_cursor( program, debug_window, is_debug );
 end
 
 targ = program.Value.targets.central_fixation;
@@ -74,6 +72,12 @@ end
 
 end
 
+function draw_cursor(program, window, is_debug)
+
+sclt.util.draw_gaze_cursor( program, window, is_debug );
+
+end
+
 function exit(state, program)
 
 states = program.Value.states;
@@ -91,15 +95,6 @@ else
   sclt.util.state_exit_timestamp( program, state );
   next( state, states('error_iti') );
 end
-
-end
-
-function draw_everything(program, window, is_debug)
-
-stimuli = program.Value.stimuli;
-draw( stimuli.central_fixation, window );
-
-sclt.util.draw_gaze_cursor( program, window, is_debug );
 
 end
 
