@@ -489,12 +489,10 @@ targets = struct();
 
 for i = 1:numel(stim_names)
   stim_name = stim_names{i};
-
-  if contains(stim_name, 'reward_cue')
-    stim_descr = stim_setup.reward_cue;
-  else
-    stim_descr = stim_setup.(stim_name);
-  end  
+  
+  if strcmp()
+  
+  stim_descr = stim_setup.(stim_name);
   
   if ( stim_descr.has_target )
     stimulus = stimuli.(stim_name);

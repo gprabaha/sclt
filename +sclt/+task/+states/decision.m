@@ -12,6 +12,8 @@ end
 
 function entry(state, program)
 
+sclt.util.state_entry_timestamp( program, state );
+
 state.UserData.acquired = false;
 state.UserData.entered = false;
 state.UserData.broke = false;
@@ -27,8 +29,6 @@ flip( window );
 if strcmp( program.Value.config.INTERFACE.gaze_source_type, 'digital_eyelink' )
   draw_targets_on_eyelink( targets, num_rew_cues );
 end
-
-sclt.util.state_entry_timestamp( program, state );
 
 if program.Value.config.DEBUG_SCREEN.is_present
     debug_window = program.Value.debug_window;
@@ -92,8 +92,8 @@ function draw_all(stimuli, num_targets, window)
 
 draw( stimuli.central_fixation_hold, window );
 for i=1:num_targets
-  targ_name = sclt.util.nth_reward_cue_name( i );
-  draw( stimuli.(targ_name), window );
+  stimui_name = sclt.util.nth_reward_cue_name( i );
+  draw( stimuli.(stimui_name), window );
 end
 
 end

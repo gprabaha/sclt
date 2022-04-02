@@ -14,7 +14,9 @@ function entry(state, program)
 
 sclt.util.state_entry_timestamp( program, state );
 
-initiate_user_data( state, program );
+state.UserData.acquired = false;
+state.UserData.entered = false;
+state.UserData.broke = false;
 
 stimuli = program.Value.stimuli;
 num_rew_cues = program.Value.structure.num_rew_cues;
@@ -33,20 +35,6 @@ end
 
 end
 
-function initiate_user_data(state, program)
-
-num_rew_cues = program.Value.structure.num_rew_cues;
-
-for i = 1:num_rew_cues
-  state.UserData.acquired(i) = false;
-  state.UserData.entered(i) = false;
-  state.UserData.broke(i) = false;
-end
-
-end
-
-
-
 function loop(state, program)
 
 num_rew_cues = program.Value.structure.num_rew_cues;
@@ -58,18 +46,18 @@ for i = 1:num_rew_cues
   targ = program.Value.targets.(targ_name);
   
   if ( targ.IsInBounds )
-    state.UserData.entered(i) = true;
+    state.UserData.entered = true;
     update_cue_entry_times( program, state, i );
 
     if ( targ.IsDurationMet )
-        state.UserData.acquired(i) = true;
+        state.UserData.acquired = true;
         update_cues_acquired( program, state, i );
         escape( state );
         return
     end
 
-  elseif ( state.UserData.entered(i) )
-    state.UserData.broke(i) = true;
+  elseif ( state.UserData.entered )
+    state.UserData.broke = true;
     update_cue_exit_times( program, state, i );
     escape( state );
     return
@@ -83,7 +71,7 @@ function exit(state, program)
 
 states = program.Value.states;
 
-if ( any( state.UserData.acquired ) )
+if ( state.UserData.acquired )
   sclt.util.state_exit_timestamp( program, state );
   next( state, states('prob_reward') );
 else
@@ -106,8 +94,8 @@ end
 function draw_all(stimuli, num_rew_cues, window)
 
 for i=1:num_rew_cues
-  stimui_name = sclt.util.nth_reward_cue_name( i );
-  draw( stimuli.(stimui_name), window );
+  targ_name = sclt.util.nth_reward_cue_name( i );
+  draw( stimuli.(targ_name), window );
 end
 
 end
@@ -116,7 +104,7 @@ end
 function initiate_cues_acquired(program, state, num_rew_cues)
 
 for i = 1:num_rew_cues
-  program.Value.data.Value(end).(state.Name).cues_acquired(1, i) = false;
+  
 end
 
 end
@@ -131,7 +119,8 @@ end
 
 function update_cues_acquired(program, state, i)
 
-program.Value.data.Value(end).(state.Name).cues_acquired(1, i) = true;
+program.Value.data.Value(end).(state.Name).cues_acquired(1, i) = ...
+  true;
 
 end
 

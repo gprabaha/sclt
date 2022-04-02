@@ -20,7 +20,7 @@ conf.STRUCTURE.state_names = { 'new_trial',...
   };
 conf.STRUCTURE.fixation_time = 0.3;
 conf.STRUCTURE.fixation_hold_time = 0.5;
-conf.STRUCTURE.target_collection_time = 0.25;
+conf.STRUCTURE.cue_collection_time = 0.25;
 conf.STRUCTURE.fix_position_radius = 0.2; % Fixation square will appear within this radius
 conf.STRUCTURE.num_rew_cues = 1;
 conf.STRUCTURE.num_trials_per_block = 50;

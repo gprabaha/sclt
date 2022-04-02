@@ -262,16 +262,12 @@ function allCueChosen = get_cue_chosen( choice_data )
 allCueChosen = nan( 1, numel(choice_data) );
 cues_acquired = { choice_data.cues_acquired }';
 for i = 1:numel(cues_acquired)
-  cues_acq_this_trial = cues_acquired{i};
-  if any( isnan(cues_acq_this_trial) )
+  cues_acq_this_trial
+  acquired_cue = find( cues_acquired{i} );
+  if isempty(acquired_cue)
     allCueChosen(i) = 0;
   else
-    acquired_cue_this_trial = find( cues_acq_this_trial );
-    if isempty(acquired_cue_this_trial)
-      allCueChosen(i) = 0;
-    else
-      allCueChosen(i) = acquired_cue_this_trial;
-    end
+    allCueChosen(i) = acquired_cue;
   end
 end
 

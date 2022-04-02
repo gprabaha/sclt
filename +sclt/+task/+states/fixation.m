@@ -12,6 +12,8 @@ end
 
 function entry(state, program)
 
+sclt.util.state_entry_timestamp( program, state );
+
 state.UserData.acquired = false;
 state.UserData.entered = false;
 state.UserData.broke = false;
@@ -27,7 +29,6 @@ if strcmp( program.Value.config.INTERFACE.gaze_source_type, 'digital_eyelink' )
   draw_targets_on_eyelink( targets );
 end
 
-sclt.util.state_entry_timestamp( program, state );
 program.Value.data.Value(end).(state.Name).initiated_fixation = false;
 
 if program.Value.config.DEBUG_SCREEN.is_present
