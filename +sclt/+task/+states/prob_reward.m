@@ -16,6 +16,10 @@ sclt.util.state_entry_timestamp( program, state );
 
 window = program.Value.window;
 flip( window );
+if program.Value.config.DEBUG_SCREEN.is_present
+    debug_window = program.Value.debug_window;
+    flip( debug_window );
+end
 
 state.UserData.acquired = false;
 state.UserData.entered = false;
@@ -49,7 +53,6 @@ end
 flip( window );
 
 if program.Value.config.DEBUG_SCREEN.is_present
-    debug_window = program.Value.debug_window;
     if any( strcmp(state_names, 'choice') )
       draw_acquired_cue( stimuli, choice_data, num_rew_cues, debug_window );
     end

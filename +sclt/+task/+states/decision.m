@@ -25,15 +25,14 @@ window = program.Value.window;
 reset_all( targets );
 draw_all( stimuli, num_rew_cues, window );
 flip( window );
-
-if strcmp( program.Value.config.INTERFACE.gaze_source_type, 'digital_eyelink' )
-  draw_targets_on_eyelink( targets, num_rew_cues );
-end
-
 if program.Value.config.DEBUG_SCREEN.is_present
     debug_window = program.Value.debug_window;
     draw_all( stimuli, num_rew_cues, debug_window );
     flip( debug_window );
+end
+
+if strcmp( program.Value.config.INTERFACE.gaze_source_type, 'digital_eyelink' )
+  draw_targets_on_eyelink( targets, num_rew_cues );
 end
 
 end
