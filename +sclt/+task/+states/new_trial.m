@@ -162,8 +162,7 @@ else
     case 'prob_reward'
       data_scaffold.(state).reward_start_time = nan;
       data_scaffold.(state).was_reward_delivered = nan;
-    case 'var_delay'
-      data_scaffold.(state).delay_period = nan;
+      data_scaffold.(state).reward_delay = nan;
   end
 end
 

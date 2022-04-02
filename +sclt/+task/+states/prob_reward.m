@@ -14,6 +14,9 @@ function entry(state, program)
 
 sclt.util.state_entry_timestamp( program, state );
 
+window = program.Value.window;
+flip( window );
+
 state.UserData.acquired = false;
 state.UserData.entered = false;
 state.UserData.broke = false;
@@ -31,10 +34,10 @@ if incorporate_var_delay
   pause_duration = get_var_delay(program);
   disp( ['Delay amount: ' num2str( pause_duration )] );
   pause( pause_duration );
+  update_pause_duration_in_data( program, state, pause_duration );
 end
 
 % Draw the acquired target in the reward
-window = program.Value.window;
 stimuli = program.Value.stimuli;
 num_rew_cues = program.Value.structure.num_rew_cues;
 state_names = program.Value.structure.state_names;
@@ -95,6 +98,12 @@ for i = 1:num_rew_cues
     end
   end
 end
+
+end
+
+function update_pause_duration_in_data(program, state, reward_delay)
+
+program.Value.data.Value(end).(state.Name).reward_delay = reward_delay;
 
 end
 
