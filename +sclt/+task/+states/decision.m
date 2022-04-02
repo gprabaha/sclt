@@ -102,11 +102,25 @@ end
 function draw_everything(program, window, is_debug)
 
 stimuli = program.Value.stimuli;
-num_rew_cues = program.Value.structure.num_rew_cues;
+targets = program.Value.targets;
 draw( stimuli.central_fixation_hold, window );
+if is_debug
+  bounds = targets.central_fixation_hold.Bounds;
+  % Change the target rect to draw in debug window
+  bounds.BaseRect.Rectangle.Window = window;
+  draw( bounds, window );
+  bounds.BaseRect.Rectangle.Window = program.Value.window;
+end
+num_rew_cues = program.Value.structure.num_rew_cues;
 for i=1:num_rew_cues
   stimui_name = sclt.util.nth_reward_cue_name( i );
   draw( stimuli.(stimui_name), window );
+  if is_debug
+    bounds = targets.(stimui_name).Bounds;
+    bounds.BaseRect.Rectangle.Window = window;
+    draw( bounds, window );
+    bounds.BaseRect.Rectangle.Window = program.Value.window;
+  end
 end
 sclt.util.draw_gaze_cursor( program, window, is_debug );
 
@@ -118,7 +132,7 @@ if nargin < 3
   color = 3;
 end
 
-rect = get_bounding_rect( targets.central_fixation.Bounds );
+rect = get_bounding_rect( targets.central_fixation_hold.Bounds );
 sclt.util.el_draw_rect( rect, color );
 for i=1:num_targets
   targ_name = sclt.util.nth_reward_cue_name( i );

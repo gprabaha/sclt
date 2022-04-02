@@ -34,7 +34,7 @@ program.Value.data.Value(end).(state.Name).initiated_fixation = false;
 if program.Value.config.DEBUG_SCREEN.is_present
     debug_window = program.Value.debug_window;
     is_debug = true;
-    draw_everything( program, window, is_debug );
+    draw_everything( program, debug_window, is_debug );
     flip( debug_window );
 end
 
@@ -97,8 +97,15 @@ end
 function draw_everything(program, window, is_debug)
 
 stimuli = program.Value.stimuli;
+targets = program.Value.targets;
 draw( stimuli.central_fixation, window );
-
+if is_debug
+  bounds = targets.central_fixation.Bounds;
+  % THERE SHOULD BE A BETTER WAY OF DOING THIS
+  bounds.BaseRect.Rectangle.Window = window;
+  draw( bounds, window );
+  bounds.BaseRect.Rectangle.Window = program.Value.window;
+end
 sclt.util.draw_gaze_cursor( program, window, is_debug );
 
 end

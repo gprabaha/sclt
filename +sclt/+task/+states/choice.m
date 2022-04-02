@@ -111,10 +111,17 @@ end
 function draw_everything(program, window, is_debug)
 
 stimuli = program.Value.stimuli;
+targets = program.Value.targets;
 num_rew_cues = program.Value.structure.num_rew_cues;
 for i=1:num_rew_cues
   stimui_name = sclt.util.nth_reward_cue_name( i );
   draw( stimuli.(stimui_name), window );
+  if is_debug
+    bounds = targets.(stimui_name).Bounds;
+    bounds.BaseRect.Rectangle.Window = window;
+    draw( bounds, window );
+    bounds.BaseRect.Rectangle.Window = program.Value.window;
+  end
 end
 sclt.util.draw_gaze_cursor( program, window, is_debug );
 
