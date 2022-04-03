@@ -17,6 +17,7 @@ sclt.util.state_entry_timestamp( program, state );
 state.UserData.acquired = false;
 state.UserData.entered = false;
 state.UserData.broke = false;
+num_rew_cues = program.Value.structure.num_rew_cues;
 
 targets = program.Value.targets;
 reset_all( targets );
@@ -50,7 +51,7 @@ if program.Value.config.DEBUG_SCREEN.is_present
   flip( debug_window );
 end
 
-targ = program.Value.targets.central_fixation;
+targ = program.Value.targets.central_fixation_hold;
 
 if ( targ.IsInBounds )
   state.UserData.entered = true;
