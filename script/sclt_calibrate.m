@@ -19,7 +19,7 @@ screen_info.debug_screen_rect = conf.DEBUG_SCREEN.rect;
 
 reward_info = struct();
 reward_info.channel_index = 1;
-reward_info.size = 0.15;
+reward_info.size = conf.REWARDS.key_press;  
 reward_info.manager_type = reward_manager_type_from_config( conf );
 reward_info.serial_port = conf.SERIAL.port;
 

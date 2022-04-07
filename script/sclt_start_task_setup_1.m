@@ -12,10 +12,10 @@ conf.STRUCTURE.state_names = { 'new_trial',...
   'task_iti',...
   'error_iti'...
   };
-conf.STRUCTURE.fixation_time = 0.1;
-conf.STRUCTURE.fixation_hold_time = 0.05;
-conf.STRUCTURE.cue_collection_time = 0.25;
-conf.STRUCTURE.fix_position_radius = 0.2; % Fixation square will appear within this radius
+conf.STRUCTURE.fixation_time = 0.05;
+conf.STRUCTURE.fixation_hold_time = 0.1;
+conf.STRUCTURE.cue_collection_time = 0.1;
+conf.STRUCTURE.fix_position_radius = 0.1; % Fixation square will appear within this radius
 conf.STRUCTURE.num_rew_cues = 1;
 conf.STRUCTURE.target_position_radius  = 0.4; % Targets appear with inner radius of fix radius and outer radius as this
 conf.STRUCTURE.incorporate_var_delay = false;
@@ -24,18 +24,24 @@ conf.STRUCTURE.var_delay_times = linspace( 0.4, 0.6, 5 );
 %%%%%%%%%%%%%%%%%%%%%%
 % Stimuli Properties %
 %%%%%%%%%%%%%%%%%%%%%%
-conf.STIMULI.setup.central_fixation.size = [200, 200];
-conf.STIMULI.setup.central_fixation.target_padding = 150;
-conf.STIMULI.setup.central_fixation_hold.size = [200, 200];
-conf.STIMULI.setup.central_fixation_hold.target_padding = 150;
-conf.STIMULI.setup.reward_cue.size = [125, 125];
-conf.STIMULI.setup.reward_cue.target_padding = 40;
+targ_size = [150 150];
+targ_padding = 150;
+
+conf.STIMULI.setup.central_fixation.size = targ_size;
+conf.STIMULI.setup.central_fixation.target_padding = targ_padding;
+conf.STIMULI.setup.central_fixation_hold.size = ...
+    conf.STIMULI.setup.central_fixation.size;
+conf.STIMULI.setup.central_fixation_hold.target_padding = ...
+    conf.STIMULI.setup.central_fixation.target_padding;
+conf.STIMULI.setup.reward_cue.size = targ_size;
+conf.STIMULI.setup.reward_cue.target_padding = ...
+    conf.STIMULI.setup.central_fixation.target_padding;
 conf.STIMULI.setup.gaze_cursor.size = [20, 20];
 conf.STIMULI.setup.gaze_cursor.color = [0 255 255];
 
 
-conf.REWARDS.prob_reward = 0.2;
+conf.REWARDS.prob_reward = 0.35;
 conf.REWARDS.det_reward = 0.05;
-conf.REWARDS.key_press = 0.1;
+conf.REWARDS.key_press = 0.2;
 
 sclt.task.start( conf );
