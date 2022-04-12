@@ -123,7 +123,6 @@ for i=1:num_rew_cues
     bounds.BaseRect.Rectangle.Window = program.Value.window;
   end
 end
-sclt.util.draw_gaze_cursor( program, window, is_debug );
 
 end
 

@@ -106,7 +106,6 @@ if is_debug
   draw( bounds, window );
   bounds.BaseRect.Rectangle.Window = program.Value.window;
 end
-sclt.util.draw_gaze_cursor( program, window, is_debug );
 
 end
 
