@@ -171,6 +171,7 @@ SIGNAL.analog_gaze_input_channel_indices_m2 = [3, 4];
 % REWARDS
 REWARDS = struct();
 REWARDS.prob_reward = 0.2;
+REWARDS.prob_reward_pulses = 2;
 REWARDS.det_reward = 0.05;
 REWARDS.key_press = 0.1;
 

@@ -33,6 +33,7 @@ state.UserData.broke = false;
 % probability
 
 quantity = program.Value.rewards.prob_reward;
+num_pulses = program.Value.rewards.prob_reward_pulses;
 incorporate_var_delay = program.Value.structure.incorporate_var_delay;
 if incorporate_var_delay
   pause_duration = get_var_delay(program);
@@ -64,7 +65,7 @@ end
 program.Value.data.Value(end).(state.Name).was_reward_delivered = false;
 % if give_prob_reward
 update_reward_start_time( program, state );
-sclt.util.deliver_reward( program, 1, quantity );
+sclt.util.deliver_pulsed_reward( program, 1, quantity, num_pulses );
 update_was_reward_delivered( program, state );
 % end
 

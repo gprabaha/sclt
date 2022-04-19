@@ -40,7 +40,8 @@ conf.STIMULI.setup.gaze_cursor.size = [20, 20];
 conf.STIMULI.setup.gaze_cursor.color = [0 255 255];
 
 
-conf.REWARDS.prob_reward = 0.35;
+conf.REWARDS.prob_reward = 0.2;
+conf.REWARDS.prob_reward_pulses = 2;
 conf.REWARDS.det_reward = 0.05;
 conf.REWARDS.key_press = 0.2;
 

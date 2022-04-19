@@ -8,7 +8,7 @@ end
 % Reward details %
 %%%%%%%%%%%%%%%%%%
 conf.REWARDS.prob_reward = 0.2;
-conf.REWARDS.prob_reward_pulses = 2;
+REWARDS
 conf.REWARDS.det_reward = 0.05;
 conf.REWARDS.key_press = 0.1;
 
