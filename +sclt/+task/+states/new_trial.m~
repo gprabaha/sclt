@@ -245,9 +245,9 @@ if isfield( data, 'choice' )
 end
 
 fprintf( 'Ratio of:\n')
-fprintf( 'InitTrial:TotTrial;   Overall = %0.3f; Last 10 trials = %0.3f\n',...
+fprintf( 'InitTrial:TotTrial;   Overall = %0.3f; Last 20 trials = %0.3f\n',...
   total_initiated_trials/num_trials, initiated_in_last_10/numel(snippet) );
-fprintf( 'FixAcq:FixInit;       Overall = %0.3f; Last 10 trials = %0.3f\n',...
+fprintf( 'FixAcq:FixInit;       Overall = %0.3f; Last 20 trials = %0.3f\n',...
   total_fixations/total_initiated_trials, fixations_in_last_10/initiated_in_last_10 );
 
 
@@ -265,15 +265,14 @@ else
 end
 
 if isfield( data, 'decision' )
-  fprintf( 'FixHeld:FixInit;      Overall = %0.3f; Last 10 trials = %0.3f\n',...
+  fprintf( 'FixHeld:FixInit;      Overall = %0.3f; Last 20 trials = %0.3f\n',...
     total_fixation_held/total_initiated_trials, fixation_held_in_last_10/initiated_in_last_10 );
 end
 if isfield( data, 'choice' )
-  fprintf( 'CorChoice:FixInit;    Overall = %0.3f; Last 10 trials = %0.3f\n',...
+  fprintf( 'CorChoice:FixInit;    Overall = %0.3f; Last 20 trials = %0.3f\n',...
     total_cues_chosen/total_initiated_trials, total_cues_chosen_in_last_10/initiated_in_last_10 );
 end
 
-data = program.Value.data.Value(1:end-1);
 
 fix_initiated_last_10 = [ data.fixations_initiated_last_10 ];
 fix_accuracy_last_10 = [ data.fixations_accuracy_last_10 ];
@@ -281,14 +280,21 @@ trials = [ data.trial_number ];
 
 clf;
 hold on;
-plot( trials, fix_initiated_last_10, 'r.-', 'LineWidth', 1, 'MarkerSize', 10);
-plot( trials, fixations_initiated_overall * ones( 1, numel( trials ) ), 'r--', 'LineWidth', 2 );
-plot( trials, fix_accuracy_last_10, 'b.-', 'LineWidth', 1, 'MarkerSize', 10 );
+plot( trials, fix_initiated_last_10, 'r-', 'LineWidth', 1 );
+plot( trials, fix_initiated_last_10, 'ro', 'MarkerSize', 5 );
+plot( trials, fixations_initiated_overall * ones( 1, numel( trials ) ), 'r-', 'LineWidth', 2 );
+plot( trials, fix_accuracy_last_10, 'b-', 'LineWidth', 1 );
+plot( trials, fix_accuracy_last_10, 'bo', 'MarkerSize', 5 );
 plot( trials, fixations_accuracy_overall * ones( 1, numel( trials ) ), 'b--', 'LineWidth', 2);
 hold off;
-legend({'Init Last 10', 'Init Overall', 'Acc Last 10', 'Acc Overall'}, 'Location', 'Best');
-ylabel('Fraction');
-xlabel('Trial number');
+legend({'Init Last 10', 'Init trials', 'Init Overall', 'Acc Last 10', 'Init trials', 'Acc Overall'});
+xlabel('Fraction');
+ylabel('Trial number');
+
+% Write lines here to plot the overall performance as a horizontal line and
+% then overlay the accuracy over the last 20 or 10 trials over it
+
+
 
 
 end
