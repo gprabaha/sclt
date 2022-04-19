@@ -32,7 +32,7 @@ conf.INTERFACE.stop_key = KbName( 'escape' );
 calibration_rect = [0, 0, 1600, 900];
 
 conf.SCREEN.rect = [];
-conf.SCREEN.index = 3;
+conf.SCREEN.index = 2;
 conf.SCREEN.calibration_rect = calibration_rect;
 % Debug screen
 % conf.DEBUG_SCREEN.is_present = true;
@@ -43,7 +43,7 @@ conf.DEBUG_SCREEN.background_color = [ 0 0 0 ];
 conf.DEBUG_SCREEN.rect = calibration_rect;
 % Calib screen
 conf.CALIB_SCREEN.full_rect = [];
-conf.CALIB_SCREEN.index = 3;
+conf.CALIB_SCREEN.index = 2;
 conf.CALIB_SCREEN.calibration_rect = calibration_rect;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -11,7 +11,7 @@ conf.STRUCTURE.state_names = { 'new_trial',...
   'task_iti',...
   'error_iti'...
   };
-conf.STRUCTURE.fixation_time = 0.05;
+conf.STRUCTURE.fixation_time = 0.1;
 conf.STRUCTURE.fixation_hold_time = 0.1;
 conf.STRUCTURE.cue_collection_time = 0.1;
 conf.STRUCTURE.fix_position_radius = 0.1; % Fixation square will appear within this radius
@@ -23,8 +23,8 @@ conf.STRUCTURE.var_delay_times = linspace( 0.4, 0.6, 5 );
 %%%%%%%%%%%%%%%%%%%%%%
 % Stimuli Properties %
 %%%%%%%%%%%%%%%%%%%%%%
-targ_size = [150 150];
-targ_padding = 150;
+targ_size = [700 700];
+targ_padding = 100;
 
 conf.STIMULI.setup.central_fixation.size = targ_size;
 conf.STIMULI.setup.central_fixation.target_padding = targ_padding;
