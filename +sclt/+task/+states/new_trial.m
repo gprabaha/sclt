@@ -289,7 +289,7 @@ hold off;
 legend({'Init Last 10', 'Init Overall', 'Acc Last 10', 'Acc Overall'}, 'Location', 'Best');
 ylabel('Fraction');
 xlabel('Trial number');
-
+drawnow;
 
 end
 

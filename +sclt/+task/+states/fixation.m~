@@ -101,9 +101,7 @@ targets = program.Value.targets;
 draw( stimuli.central_fixation, window );
 if is_debug
   bounds = targets.central_fixation.Bounds;
-%   bounds.BaseRect.Rectangle.Window = window;
   draw( bounds, window );
-%   bounds.BaseRect.Rectangle.Window = program.Value.window;
   sclt.util.draw_gaze_cursor(program, window, is_debug);
 end
 
