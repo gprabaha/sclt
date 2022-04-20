@@ -23,9 +23,9 @@ reward_info.size = conf.REWARDS.key_press;
 reward_info.manager_type = reward_manager_type_from_config( conf );
 reward_info.serial_port = conf.SERIAL.port;
 
-
+target_size = 75;
 n_cal_pts = 5;
-run_calibration( screen_info, reward_info, n_cal_pts );
+run_calibration( screen_info, reward_info, target_size, n_cal_pts );
 
 end
 
